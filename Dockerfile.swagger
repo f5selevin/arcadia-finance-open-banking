@@ -1,0 +1,33 @@
+FROM node:22-alpine AS spec-builder
+
+WORKDIR /build
+COPY api/openbanking.json ./api/openbanking.json
+COPY filter-spec.js ./filter-spec.js
+RUN API_PATH_PREFIXES=/banks,/accounts,/payments API_SERVER_URL=/ \
+    node ./filter-spec.js
+
+FROM swaggerapi/swagger-ui:latest
+
+USER root
+
+RUN mkdir -p /tmp/swagger-ui /usr/share/nginx/html/swagger \
+    && cp -a /usr/share/nginx/html/. /tmp/swagger-ui/ \
+    && cp -a /tmp/swagger-ui/. /usr/share/nginx/html/swagger/
+
+COPY --from=spec-builder /build/api/service.json \
+    /usr/share/nginx/html/swagger/openbanking.json
+
+RUN printf '%s\n' \
+    'window.onload = function() {' \
+    '  window.ui = SwaggerUIBundle({' \
+    '    url: "./openbanking.json",' \
+    '    dom_id: "#swagger-ui",' \
+    '    deepLinking: true,' \
+    '    presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],' \
+    '    plugins: [SwaggerUIBundle.plugins.DownloadUrl],' \
+    '    layout: "StandaloneLayout"' \
+    '  });' \
+    '};' \
+    > /usr/share/nginx/html/swagger/swagger-initializer.js
+
+EXPOSE 8080

@@ -1,0 +1,2471 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Generic API Specification",
+    "description": "API Specification for OpenBanking. Provides endpoints for payment initiation, refunds, and bank details.",
+    "contact": {
+      "name": "API Support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "Generic License",
+      "url": "https://example.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Bank Service",
+      "description": "Endpoints to retrieve and view details of banks supporting Open Banking."
+    },
+    {
+      "name": "Payment Service",
+      "description": "Endpoints to initiate payments and retrieve payment statuses."
+    },
+    {
+      "name": "Account Service",
+      "description": "Endpoints to manage user accounts."
+    }
+  ],
+  "paths": {
+    "/banks": {
+      "get": {
+        "tags": ["Bank Service"],
+        "summary": "Retrieve Banks",
+        "description": "Get a list of supported banks.",
+        "operationId": "getBanks",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "description": "ISO country code.",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {"type": "integer", "default": 1}
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {"type": "integer", "default": 20}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/BanksResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["bank_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/banks/{bankId}": {
+      "get": {
+        "tags": ["Bank Service"],
+        "summary": "Retrieve Bank Details",
+        "description": "Get details of a specific bank.",
+        "operationId": "getBankDetails",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "description": "ID of the bank.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/BankDetailsResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["bank_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "List Accounts",
+        "description": "Retrieve a list of user accounts.",
+        "operationId": "listAccounts",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter accounts by user ID.",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {"type": "integer", "default": 1}
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {"type": "integer", "default": 20}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AccountsResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["account_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Account Service"],
+        "summary": "Create Account",
+        "description": "Create a new user account.",
+        "operationId": "createAccount",
+        "requestBody": {
+          "description": "Account creation details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/AccountRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["account_create"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Get Account Details",
+        "description": "Retrieve details of a specific user account.",
+        "operationId": "getAccountDetails",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["account_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Account Service"],
+        "summary": "Update Account",
+        "description": "Update details of a specific user account.",
+        "operationId": "updateAccount",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Account update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/AccountRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["account_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Account Service"],
+        "summary": "Delete Account",
+        "description": "Delete a specific user account.",
+        "operationId": "deleteAccount",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["account_delete"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/payments": {
+      "get": {
+        "tags": ["Payment Service"],
+        "summary": "List Payments",
+        "description": "Retrieve a list of payments.",
+        "operationId": "listPayments",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "Start date for the payments.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "End date for the payments.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of the payments.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Payment Service"],
+        "summary": "Create Payment",
+        "description": "Initiate a payment request.",
+        "operationId": "createPayment",
+        "requestBody": {
+          "description": "Payment request details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/PaymentRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_create"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/payments/{paymentId}": {
+      "get": {
+        "tags": ["Payment Service"],
+        "summary": "Retrieve Payment Details",
+        "description": "Get details of a specific payment.",
+        "operationId": "getPaymentDetails",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Payment Service"],
+        "summary": "Update Payment",
+        "description": "Update details of a specific payment.",
+        "operationId": "updatePayment",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Payment update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/PaymentRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Payment Service"],
+        "summary": "Delete Payment",
+        "description": "Delete a specific payment.",
+        "operationId": "deletePayment",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_delete"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/payments/{paymentId}/refunds": {
+      "get": {
+        "tags": ["Payment Service"],
+        "summary": "List Payment Refunds",
+        "description": "List refunds for a specific payment.",
+        "operationId": "listRefunds",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["refund_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Payment Service"],
+        "summary": "Create Refund",
+        "description": "Initiate a refund for a specific payment.",
+        "operationId": "createRefund",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Refund request details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/RefundRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["refund_create"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/payments/{paymentId}/refunds/{refundId}": {
+      "get": {
+        "tags": ["Payment Service"],
+        "summary": "Retrieve Refund Details",
+        "description": "Get details of a specific refund.",
+        "operationId": "getRefundDetails",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "ID of the refund.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["refund_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Payment Service"],
+        "summary": "Update Refund",
+        "description": "Update details of a specific refund.",
+        "operationId": "updateRefund",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "ID of the refund.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Refund update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/RefundRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["refund_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Payment Service"],
+        "summary": "Delete Refund",
+        "description": "Delete a specific refund.",
+        "operationId": "deleteRefund",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "ID of the refund.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["refund_delete"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/payments/{paymentId}/history": {
+      "get": {
+        "tags": ["Payment Service"],
+        "summary": "Retrieve Payment History",
+        "description": "Get the history of a specific payment.",
+        "operationId": "getPaymentHistory",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "ID of the payment.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["payment_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/transactions": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "List Account Transactions",
+        "description": "Retrieve a list of transactions for a specific account.",
+        "operationId": "listAccountTransactions",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "Start date for the transactions.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "End date for the transactions.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Account Service"],
+        "summary": "Create Transaction",
+        "description": "Create a transaction for a specific account.",
+        "operationId": "createTransaction",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Transaction creation details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/TransactionRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_create"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/transactions/{transactionId}": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve Transaction Details",
+        "description": "Get details of a specific transaction.",
+        "operationId": "getTransactionDetails",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "ID of the transaction.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Account Service"],
+        "summary": "Update Transaction",
+        "description": "Update details of a specific transaction.",
+        "operationId": "updateTransaction",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "ID of the transaction.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Transaction update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/TransactionRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Account Service"],
+        "summary": "Delete Transaction",
+        "description": "Delete a specific transaction.",
+        "operationId": "deleteTransaction",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "ID of the transaction.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_delete"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/balance": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve Account Balance",
+        "description": "Get the balance of a specific account.",
+        "operationId": "getAccountBalance",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/BalanceResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["balance_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "List All Transactions",
+        "description": "Retrieve a list of all transactions across accounts.",
+        "operationId": "listAllTransactions",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "Start date for the transactions.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "End date for the transactions.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["transaction_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/user/profile": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve User Profile",
+        "description": "Get the profile details of the authenticated user.",
+        "operationId": "getUserProfile",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/UserProfileResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["profile_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Account Service"],
+        "summary": "Update User Profile",
+        "description": "Update the profile details of the authenticated user.",
+        "operationId": "updateUserProfile",
+        "requestBody": {
+          "description": "User profile update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/UserProfileRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/UserProfileResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["profile_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/user/settings": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve User Settings",
+        "description": "Get the settings of the authenticated user.",
+        "operationId": "getUserSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/UserSettingsResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["settings_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Account Service"],
+        "summary": "Update User Settings",
+        "description": "Update the settings of the authenticated user.",
+        "operationId": "updateUserSettings",
+        "requestBody": {
+          "description": "User settings update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/UserSettingsRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/UserSettingsResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["settings_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/statements": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve Account Statements",
+        "description": "Get a list of statements for a specific account.",
+        "operationId": "listAccountStatements",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "Start date for the statements.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "End date for the statements.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["statements_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Account Service"],
+        "summary": "Create Statement",
+        "description": "Create a statement for a specific account.",
+        "operationId": "createStatement",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "description": "Statement creation details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/StatementRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["statements_create"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/statements/{statementId}": {
+      "get": {
+        "tags": ["Account Service"],
+        "summary": "Retrieve Statement Details",
+        "description": "Get details of a specific statement.",
+        "operationId": "getStatementDetails",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "statementId",
+            "in": "path",
+            "description": "ID of the statement.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["statements_read"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Account Service"],
+        "summary": "Update Statement",
+        "description": "Update details of a specific statement.",
+        "operationId": "updateStatement",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "statementId",
+            "in": "path",
+            "description": "ID of the statement.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Statement update details.",
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/StatementRequest"}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["statements_update"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Account Service"],
+        "summary": "Delete Statement",
+        "description": "Delete a specific statement.",
+        "operationId": "deleteStatement",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "ID of the account.",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "statementId",
+            "in": "path",
+            "description": "ID of the statement.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": ["statements_delete"]
+          },
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BanksResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Bank"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "BankDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the bank",
+            "x-faker": "datatype.uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the bank",
+            "x-faker": "company.companyName"
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "Country code of the bank",
+            "x-faker": "address.countryCode"
+          }
+        }
+      },
+      "PaymentsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "currency": {
+            "type": "string",
+            "x-faker": "finance.currencyCode"
+          },
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          },
+          "recipient": {
+            "$ref": "#/components/schemas/Recipient"
+          }
+        }
+      },
+      "RefundsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Refund"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "Refund": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          }
+        }
+      },
+      "HistoryResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/History"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "History": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "x-faker": "datatype.number"
+          },
+          "size": {
+            "type": "integer",
+            "x-faker": "datatype.number"
+          },
+          "totalElements": {
+            "type": "integer",
+            "x-faker": "datatype.number"
+          },
+          "totalPages": {
+            "type": "integer",
+            "x-faker": "datatype.number"
+          }
+        }
+      },
+      "AccountRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-faker": "name.findName"
+          },
+          "email": {
+            "type": "string",
+            "x-faker": "internet.email"
+          },
+          "password": {
+            "type": "string",
+            "x-faker": "internet.password"
+          }
+        }
+      },
+      "AccountResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "name": {
+            "type": "string",
+            "x-faker": "name.findName"
+          },
+          "email": {
+            "type": "string",
+            "x-faker": "internet.email"
+          }
+        }
+      },
+      "AccountsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountResponse"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "PaymentRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "currency": {
+            "type": "string",
+            "x-faker": "finance.currencyCode"
+          },
+          "recipient": {
+            "$ref": "#/components/schemas/Recipient"
+          }
+        }
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          }
+        }
+      },
+      "RefundRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "reason": {
+            "type": "string",
+            "x-faker": "lorem.sentence"
+          }
+        }
+      },
+      "RefundResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "x-faker": "random.word"
+          },
+          "message": {
+            "type": "string",
+            "x-faker": "lorem.sentence"
+          }
+        }
+      },
+      "Recipient": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-faker": "name.findName"
+          },
+          "accountNumber": {
+            "type": "string",
+            "x-faker": "finance.account"
+          },
+          "bankCode": {
+            "type": "string",
+            "x-faker": "finance.bic"
+          }
+        }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "currency": {
+            "type": "string",
+            "x-faker": "finance.currencyCode"
+          },
+          "description": {
+            "type": "string",
+            "x-faker": "lorem.sentence"
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "currency": {
+            "type": "string",
+            "x-faker": "finance.currencyCode"
+          },
+          "status": {
+            "type": "string",
+            "x-faker": "random.word"
+          }
+        }
+      },
+      "TransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "BalanceResponse": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "number",
+            "format": "double",
+            "x-faker": "finance.amount"
+          },
+          "currency": {
+            "type": "string",
+            "x-faker": "finance.currencyCode"
+          }
+        }
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "name": {
+            "type": "string",
+            "x-faker": "name.findName"
+          },
+          "email": {
+            "type": "string",
+            "x-faker": "internet.email"
+          }
+        }
+      },
+      "UserProfileRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-faker": "name.findName"
+          },
+          "email": {
+            "type": "string",
+            "x-faker": "internet.email"
+          }
+        }
+      },
+      "UserSettingsResponse": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "x-faker": "random.locale"
+          },
+          "timezone": {
+            "type": "string",
+            "x-faker": "address.timeZone"
+          }
+        }
+      },
+      "UserSettingsRequest": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "x-faker": "random.locale"
+          },
+          "timezone": {
+            "type": "string",
+            "x-faker": "address.timeZone"
+          }
+        }
+      },
+      "StatementsResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatementResponse"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/Page"
+          }
+        }
+      },
+      "StatementRequest": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.future"
+          }
+        }
+      },
+      "StatementResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "x-faker": "datatype.uuid"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.future"
+          },
+          "generatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "x-faker": "date.past"
+          }
+        }
+      }
+    },
+    
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": {
+              "bank_read": "Read bank data",
+              "payment_create": "Create payments",
+              "payment_read": "Read payment data",
+              "refund_read": "Read refund data",
+              "refund_create": "Create refunds",
+              "account_read": "Read account data",
+              "account_create": "Create accounts",
+              "account_update": "Update accounts",
+              "account_delete": "Delete accounts",
+              "transaction_read": "Read transaction data",
+              "transaction_create": "Create transactions",
+              "transaction_update": "Update transactions",
+              "transaction_delete": "Delete transactions",
+              "balance_read": "Read balance data",
+              "profile_read": "Read user profile",
+              "profile_update": "Update user profile",
+              "settings_read": "Read user settings",
+              "settings_update": "Update user settings",
+              "statements_read": "Read statements data",
+              "statements_create": "Create statements",
+              "statements_update": "Update statements",
+              "statements_delete": "Delete statements"
+            }
+          }
+        }
+      },
+      "ApiKey": {
+        "type": "apiKey",
+        "name": "X-API-Key",
+        "in": "header"
+      }
+    }
+  }
+}
