@@ -1,6 +1,6 @@
-# Arcadia Finance Open Banking services
+# Arcadia Finance Open Banking API services
 
-This application is taken from the original [Arcadia Finance Open Banking repository](https://github.com/yoctoalex/arcadia-finance/tree/master/openbanking).
+This application is taken from the original [Arcadia Finance Open Banking API repository](https://github.com/yoctoalex/arcadia-finance/tree/master/openbanking).
 
 The OpenAPI mock is split into three independently built API services. A fourth image provides Swagger UI for interactively calling those APIs. Each image listens on port `8080`:
 
