@@ -15,9 +15,11 @@ RUN mkdir -p /tmp/swagger-ui /usr/share/nginx/html/swagger \
     && cp -a /tmp/swagger-ui/. /usr/share/nginx/html/swagger/
 
 COPY --from=spec-builder /build/api/service.json \
-    /usr/share/nginx/html/swagger/openbanking.json
+    /usr/share/nginx/html/openbanking.json
 
-RUN printf '%s\n' \
+RUN cp /usr/share/nginx/html/openbanking.json \
+    /usr/share/nginx/html/swagger/openbanking.json \
+    && printf '%s\n' \
     'window.onload = function() {' \
     '  window.ui = SwaggerUIBundle({' \
     '    url: "./openbanking.json",' \
@@ -28,6 +30,7 @@ RUN printf '%s\n' \
     '    layout: "StandaloneLayout"' \
     '  });' \
     '};' \
-    > /usr/share/nginx/html/swagger/swagger-initializer.js
+    | tee /usr/share/nginx/html/swagger-initializer.js \
+    /usr/share/nginx/html/swagger/swagger-initializer.js >/dev/null
 
 EXPOSE 8080

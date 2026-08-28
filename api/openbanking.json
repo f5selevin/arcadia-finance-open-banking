@@ -44,19 +44,19 @@
             "name": "country",
             "in": "query",
             "description": "ISO country code.",
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "page",
             "in": "query",
             "description": "Page number.",
-            "schema": {"type": "integer", "default": 1}
+            "schema": { "type": "integer", "default": 1 }
           },
           {
             "name": "size",
             "in": "query",
             "description": "Page size.",
-            "schema": {"type": "integer", "default": 20}
+            "schema": { "type": "integer", "default": 20 }
           }
         ],
         "responses": {
@@ -64,7 +64,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/BanksResponse"}
+                "schema": { "$ref": "#/components/schemas/BanksResponse" }
               }
             }
           },
@@ -72,7 +72,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -99,7 +99,7 @@
             "in": "path",
             "description": "ID of the bank.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -107,7 +107,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/BankDetailsResponse"}
+                "schema": { "$ref": "#/components/schemas/BankDetailsResponse" }
               }
             }
           },
@@ -115,7 +115,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -123,7 +123,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -149,19 +149,19 @@
             "name": "userId",
             "in": "query",
             "description": "Filter accounts by user ID.",
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "page",
             "in": "query",
             "description": "Page number.",
-            "schema": {"type": "integer", "default": 1}
+            "schema": { "type": "integer", "default": 1 }
           },
           {
             "name": "size",
             "in": "query",
             "description": "Page size.",
-            "schema": {"type": "integer", "default": 20}
+            "schema": { "type": "integer", "default": 20 }
           }
         ],
         "responses": {
@@ -169,7 +169,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/AccountsResponse"}
+                "schema": { "$ref": "#/components/schemas/AccountsResponse" }
               }
             }
           },
@@ -177,7 +177,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -200,7 +200,7 @@
           "description": "Account creation details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/AccountRequest"}
+              "schema": { "$ref": "#/components/schemas/AccountRequest" }
             }
           },
           "required": true
@@ -210,7 +210,7 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+                "schema": { "$ref": "#/components/schemas/AccountResponse" }
               }
             }
           },
@@ -218,7 +218,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -245,7 +245,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -253,7 +253,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+                "schema": { "$ref": "#/components/schemas/AccountResponse" }
               }
             }
           },
@@ -261,7 +261,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -269,7 +269,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -294,14 +294,14 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Account update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/AccountRequest"}
+              "schema": { "$ref": "#/components/schemas/AccountRequest" }
             }
           },
           "required": true
@@ -311,7 +311,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/AccountResponse"}
+                "schema": { "$ref": "#/components/schemas/AccountResponse" }
               }
             }
           },
@@ -319,7 +319,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -327,7 +327,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -352,7 +352,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -363,7 +363,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -371,7 +371,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -478,7 +478,7 @@
           "description": "Payment request details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/PaymentRequest"}
+              "schema": { "$ref": "#/components/schemas/PaymentRequest" }
             }
           },
           "required": true
@@ -488,7 +488,7 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+                "schema": { "$ref": "#/components/schemas/PaymentResponse" }
               }
             }
           },
@@ -496,7 +496,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -523,7 +523,7 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -531,7 +531,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+                "schema": { "$ref": "#/components/schemas/PaymentResponse" }
               }
             }
           },
@@ -539,7 +539,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -547,7 +547,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -572,14 +572,14 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Payment update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/PaymentRequest"}
+              "schema": { "$ref": "#/components/schemas/PaymentRequest" }
             }
           },
           "required": true
@@ -589,7 +589,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/PaymentResponse"}
+                "schema": { "$ref": "#/components/schemas/PaymentResponse" }
               }
             }
           },
@@ -597,7 +597,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -605,7 +605,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -630,7 +630,7 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -641,7 +641,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -649,7 +649,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -676,7 +676,7 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "page",
@@ -749,14 +749,14 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Refund request details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/RefundRequest"}
+              "schema": { "$ref": "#/components/schemas/RefundRequest" }
             }
           },
           "required": true
@@ -766,7 +766,7 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+                "schema": { "$ref": "#/components/schemas/RefundResponse" }
               }
             }
           },
@@ -774,7 +774,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -801,14 +801,14 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "refundId",
             "in": "path",
             "description": "ID of the refund.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -816,7 +816,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+                "schema": { "$ref": "#/components/schemas/RefundResponse" }
               }
             }
           },
@@ -824,7 +824,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -832,7 +832,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -857,21 +857,21 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "refundId",
             "in": "path",
             "description": "ID of the refund.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Refund update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/RefundRequest"}
+              "schema": { "$ref": "#/components/schemas/RefundRequest" }
             }
           },
           "required": true
@@ -881,7 +881,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/RefundResponse"}
+                "schema": { "$ref": "#/components/schemas/RefundResponse" }
               }
             }
           },
@@ -889,7 +889,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -897,7 +897,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -922,14 +922,14 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "refundId",
             "in": "path",
             "description": "ID of the refund.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -940,7 +940,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -948,7 +948,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -975,7 +975,7 @@
             "in": "path",
             "description": "ID of the payment.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "page",
@@ -1050,7 +1050,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "fromDate",
@@ -1131,14 +1131,14 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Transaction creation details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/TransactionRequest"}
+              "schema": { "$ref": "#/components/schemas/TransactionRequest" }
             }
           },
           "required": true
@@ -1148,7 +1148,7 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+                "schema": { "$ref": "#/components/schemas/TransactionResponse" }
               }
             }
           },
@@ -1156,7 +1156,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1183,7 +1183,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "transactionId",
@@ -1201,7 +1201,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+                "schema": { "$ref": "#/components/schemas/TransactionResponse" }
               }
             }
           },
@@ -1209,7 +1209,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1217,7 +1217,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1242,7 +1242,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "transactionId",
@@ -1259,7 +1259,7 @@
           "description": "Transaction update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/TransactionRequest"}
+              "schema": { "$ref": "#/components/schemas/TransactionRequest" }
             }
           },
           "required": true
@@ -1269,7 +1269,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/TransactionResponse"}
+                "schema": { "$ref": "#/components/schemas/TransactionResponse" }
               }
             }
           },
@@ -1277,7 +1277,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1285,7 +1285,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1310,7 +1310,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "transactionId",
@@ -1331,7 +1331,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1339,7 +1339,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1366,7 +1366,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1374,7 +1374,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/BalanceResponse"}
+                "schema": { "$ref": "#/components/schemas/BalanceResponse" }
               }
             }
           },
@@ -1382,7 +1382,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1390,7 +1390,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1492,7 +1492,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/UserProfileResponse"}
+                "schema": { "$ref": "#/components/schemas/UserProfileResponse" }
               }
             }
           },
@@ -1500,7 +1500,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1523,7 +1523,7 @@
           "description": "User profile update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/UserProfileRequest"}
+              "schema": { "$ref": "#/components/schemas/UserProfileRequest" }
             }
           },
           "required": true
@@ -1533,7 +1533,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/UserProfileResponse"}
+                "schema": { "$ref": "#/components/schemas/UserProfileResponse" }
               }
             }
           },
@@ -1541,7 +1541,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1567,7 +1567,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/UserSettingsResponse"}
+                "schema": {
+                  "$ref": "#/components/schemas/UserSettingsResponse"
+                }
               }
             }
           },
@@ -1575,7 +1577,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1598,7 +1600,7 @@
           "description": "User settings update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/UserSettingsRequest"}
+              "schema": { "$ref": "#/components/schemas/UserSettingsRequest" }
             }
           },
           "required": true
@@ -1608,7 +1610,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/UserSettingsResponse"}
+                "schema": {
+                  "$ref": "#/components/schemas/UserSettingsResponse"
+                }
               }
             }
           },
@@ -1616,7 +1620,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1643,7 +1647,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "fromDate",
@@ -1698,7 +1702,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"}
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
@@ -1723,14 +1728,14 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "description": "Statement creation details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/StatementRequest"}
+              "schema": { "$ref": "#/components/schemas/StatementRequest" }
             }
           },
           "required": true
@@ -1740,7 +1745,7 @@
             "description": "Created",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+                "schema": { "$ref": "#/components/schemas/StatementResponse" }
               }
             }
           },
@@ -1748,7 +1753,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1775,7 +1780,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "statementId",
@@ -1793,7 +1798,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+                "schema": { "$ref": "#/components/schemas/StatementResponse" }
               }
             }
           },
@@ -1801,7 +1806,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1809,7 +1814,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1834,7 +1839,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "statementId",
@@ -1851,7 +1856,7 @@
           "description": "Statement update details.",
           "content": {
             "application/json": {
-              "schema": {"$ref": "#/components/schemas/StatementRequest"}
+              "schema": { "$ref": "#/components/schemas/StatementRequest" }
             }
           },
           "required": true
@@ -1861,7 +1866,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/StatementResponse"}
+                "schema": { "$ref": "#/components/schemas/StatementResponse" }
               }
             }
           },
@@ -1869,7 +1874,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1877,7 +1882,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1902,7 +1907,7 @@
             "in": "path",
             "description": "ID of the account.",
             "required": true,
-            "schema": {"type": "string"}
+            "schema": { "type": "string" }
           },
           {
             "name": "statementId",
@@ -1923,7 +1928,7 @@
             "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
@@ -1931,7 +1936,7 @@
             "description": "Not Found",
             "content": {
               "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1955,7 +1960,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Bank"
+              "$ref": "#/components/schemas/BankDetailsResponse"
             }
           },
           "page": {
@@ -2426,7 +2431,7 @@
         }
       }
     },
-    
+
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
