@@ -11,6 +11,23 @@ if (!prefixes.length) {
 const sourcePath = './api/openbanking.json';
 const outputPath = './api/service.json';
 const spec = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+const arrayItemCount = Number.parseInt(process.env.MOCK_ARRAY_COUNT || '10', 10);
+
+if (!Number.isInteger(arrayItemCount) || arrayItemCount < 1 || arrayItemCount > 10) {
+  throw new Error('MOCK_ARRAY_COUNT must be an integer between 1 and 10');
+}
+
+function setArrayItemCount(value) {
+  if (!value || typeof value !== 'object') return;
+
+  if (value.type === 'array') {
+    value['x-count'] = arrayItemCount;
+  }
+
+  Object.values(value).forEach(setArrayItemCount);
+}
+
+setArrayItemCount(spec);
 
 spec.paths = Object.fromEntries(
   Object.entries(spec.paths).filter(([path]) =>
