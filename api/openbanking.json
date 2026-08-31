@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Generic API Specification",
-    "description": "API Specification for OpenBanking. Provides endpoints for payment initiation, refunds, and bank details.",
+    "title": "Arcadia Finance Open Banking API Specification",
+    "description": "API Specification for Arcadia Finance Open Banking. Provides endpoints for payment initiation, refunds, and bank details.",
     "contact": {
       "name": "API Support",
       "email": "support@example.com"
