@@ -9,7 +9,7 @@ The OpenAPI mock is split into three independently built API services. A fourth 
 | Accounts | `/accounts` and nested account endpoints | `docker.io/interestingstorage/partner-spec-security:accounts-latest` |
 | Payments | `/payments` and nested payment endpoints | `docker.io/interestingstorage/partner-spec-security:payments-latest` |
 | Swagger UI | `/swagger/` | `docker.io/interestingstorage/partner-spec-security:swagger-latest` |
-| Traffic generator | OpenAPI-generated requests via Newman | `docker.io/interestingstorage/partner-spec-security:traffic-latest` |
+| Traffic generator | OpenAPI-generated requests via Newman | `ghcr.io/f5selevin/arcadia-finance-open-banking/traffic:latest` |
 
 ```shell README.md
 docker run --rm -p 8080:8080 docker.io/interestingstorage/partner-spec-security:banks-latest
@@ -36,10 +36,23 @@ entire collection with the Newman CLI in a continuous loop. It obtains the names
 metadata `petname` and targets `https://<petname>.spec-security.f5se.com`. Request failures are
 expected while the domain is being provisioned and do not stop the loop.
 
-Install, register, and start the separate Docker container as a systemd service on a UDF host:
+Install, register, and start the separate Docker container as a systemd service from a local checkout:
 
 ```shell README.md
 sudo ./udf/install-traffic-generator.sh
 ```
 
-View its logs with `journalctl -u openbanking-traffic-generator.service -f`.
+Alternatively, download and execute the installer directly from GitHub on a UDF host:
+
+```shell README.md
+curl --fail --silent --show-error --location \
+  https://raw.githubusercontent.com/f5selevin/arcadia-finance-open-banking/main/udf/install-traffic-generator.sh \
+  | sudo bash
+```
+
+The installer always checks GHCR for the latest traffic image before starting the service. View its
+logs with:
+
+```shell README.md
+journalctl -u openbanking-traffic-generator.service -f
+```
