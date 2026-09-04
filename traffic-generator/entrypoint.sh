@@ -3,6 +3,7 @@ set -uo pipefail
 
 METADATA_URL="${METADATA_URL:-http://10.1.1.4:5123/metadata}"
 DOMAIN_SUFFIX="${DOMAIN_SUFFIX:-spec-security.f5se.com}"
+API_ROOT="${API_ROOT:-/api}"
 INTERVAL_SECONDS="${INTERVAL_SECONDS:-1}"
 METADATA_RETRY_SECONDS="${METADATA_RETRY_SECONDS:-10}"
 METADATA_TIMEOUT_SECONDS="${METADATA_TIMEOUT_SECONDS:-10}"
@@ -27,7 +28,7 @@ trap 'log WARN "Received SIGINT; stopping"; exit 130' INT
 
 log INFO "Starting Open Banking Postman/Newman traffic generator"
 log INFO "Process: pid=$$ user=$(id -u):$(id -g) hostname=$(hostname) working_directory=${WORK_DIR}"
-log INFO "Configuration: metadata_url=${METADATA_URL} domain_suffix=${DOMAIN_SUFFIX} metadata_retry_seconds=${METADATA_RETRY_SECONDS} metadata_timeout_seconds=${METADATA_TIMEOUT_SECONDS} request_timeout_ms=${REQUEST_TIMEOUT_MS} iteration_interval_seconds=${INTERVAL_SECONDS}"
+log INFO "Configuration: metadata_url=${METADATA_URL} domain_suffix=${DOMAIN_SUFFIX} api_root=${API_ROOT} metadata_retry_seconds=${METADATA_RETRY_SECONDS} metadata_timeout_seconds=${METADATA_TIMEOUT_SECONDS} request_timeout_ms=${REQUEST_TIMEOUT_MS} iteration_interval_seconds=${INTERVAL_SECONDS}"
 log INFO "Runtime: node=$(node --version 2>&1) npm=$(npm --version 2>&1) newman=$(newman --version 2>&1) openapi2postmanv2=$(openapi2postmanv2 --version 2>&1)"
 log INFO "OpenAPI source: ${WORK_DIR}/api/openbanking.json ($(wc -c < ./api/openbanking.json) bytes)"
 log INFO "OpenAPI definition: title=$(jq -r '.info.title // "unknown"' ./api/openbanking.json) version=$(jq -r '.info.version // "unknown"' ./api/openbanking.json) paths=$(jq '.paths | length' ./api/openbanking.json) operations=$(jq '[.paths[] | keys[] | select(. == "get" or . == "post" or . == "put" or . == "patch" or . == "delete")] | length' ./api/openbanking.json)"
@@ -71,8 +72,10 @@ while true; do
 done
 
 TARGET_HOST="${PETNAME}.${DOMAIN_SUFFIX}"
-BASE_URL="https://${TARGET_HOST}"
-log INFO "Resolved traffic target from metadata: namespace=${PETNAME} host=${TARGET_HOST} base_url=${BASE_URL}"
+API_ROOT="/${API_ROOT#/}"
+API_ROOT="${API_ROOT%/}"
+BASE_URL="https://${TARGET_HOST}${API_ROOT}"
+log INFO "Resolved traffic target from metadata: namespace=${PETNAME} host=${TARGET_HOST} api_root=${API_ROOT} base_url=${BASE_URL}"
 
 RUN_NUMBER=0
 while true; do
